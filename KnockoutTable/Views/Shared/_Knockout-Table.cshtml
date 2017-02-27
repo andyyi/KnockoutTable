@@ -1,0 +1,116 @@
+﻿<div class="knockout-table">
+    <div class="row form-group col-md-12 top-actions">
+        <div class="form-inline">
+            <div class="form-group col-md-8 top-action" data-bind="visible: options.topActionButtons.length > 0, foreach: options.topActionButtons">
+                <input type="button" class="btn btn-info" data-bind="click: $data.action, visible: $data.visible, attr: {value: $data.title, id: $data.name + 'btn', disabled: $data.disabled }" />
+            </div>
+            <div class="form-group col-md-4 top-search pull-right" data-bind="if: options.showSearchField && listItems().length > 0">
+                <div class="form-group pull-right">
+                    <button class="btn btn-default" type="button" name="resetsearch" title="Reset Search" data-toggle="dropdown" data-bind="click: function(){currrentSearchValue('');}, attr: {value: $data.title}">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                </div>
+                <div class="form-group pull-right col-md-10" style="padding-right: 5px;">
+                    <input id="searchCriteria" class="form-control pull-right" type="text" placeholder="Search" data-bind="textInput: currrentSearchValue, event: { keyup: act_search }" style="width:100%;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" data-bind="visible: listItems().length == 0" >
+        <span>No record at this moment.</span>
+    </div>
+    <div data-bind="visible: listItems().length > 0">
+        <div class="row form-inline" data-bind="visible: options.filterOptions.length || (options.showTopPaginationBar && pages().length > 1)">
+            <div class="col-md-8 col-sm-8 col-xs-12 top-filter">
+                <div style="float:left; margin-right:10px; padding: 5px 0;" data-bind="visible: options.filterOptions.length">
+                    <span style="margin-right:10px;">Filter By: </span>
+                    <select id="selectedFilters" multiple
+                            data-bind="options: options.filterOptions,
+                     selectedOptions: selectedFilterOptioins,
+                     optionsText: 'title',
+                     buttonWidth: '50px',
+                     optionsValue: 'filterField'"></select>
+                </div>
+                <div data-bind="foreach: options.filterOptions">
+                    <div class="form-group">
+                        <input class="form-group" data-bind="visible: $data.type == 'checkbox' && !$data.hidden(),
+                       attr: ($data.type == 'checkbox') ? { name: $data.filterField, id: 'filterBy' + $data.filterField, type: $data.type } : {},
+                       checked: ($data.type == 'checkbox') ? $data.currentValue : false,
+                       value: ($data.type == 'checkbox') ? $data.currentValue : false,
+                       event: { change: $parent.filter }" />
+
+                        <select class="form-control" data-bind="visible: $data.type == 'select' && !$data.hidden(),
+                        options: $data.options, optionsText: 'text', optionsValue: 'value',
+                        attr: ($data.type == 'select') ? { name: $data.filterField, id: 'filterBy' + $data.filterField }: {},
+                        value: ($data.type == 'select') ? $data.currentValue: 0,
+                        event: { change: $parent.filter }"></select>
+
+                        <span data-bind="text: $data.title, visible: $data.type == 'checkbox' && !$data.hidden()"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 top-pagination" data-bind="visible: options.showTopPaginationBar && pages().length > 1">
+                <div class="form-group pull-right table-pagination">
+                    <ul class="pagination inline-list">
+                        <li>
+                            <a href="javascript:void(0);" aria-label="Previous" data-bind="click: act_previousPageClick, visible: pageIndex() > 0">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="pagination inline-list" data-bind="foreach: pages">
+                        <li data-bind="visible: $parent.act_showPageNumber($data), css: ($parent.pageIndex() == $data ? 'active' : '')">
+                            <a href="javascript:void(0);" data-bind="text: $data + 1, click: function () { $parent.pageIndex($data) }"></a>
+                        </li>
+                    </ul>
+                    <ul class="pagination inline-list">
+                        <li>
+                            <a href="javascript:void(0);" aria-label="Next" data-bind="click: act_nextPageClick, visible: pageIndex() < maxPageIndex()">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row form-inline">
+            <table id="tablelist" class="table table-bordered" style="margin-bottom: 0;"></table>
+        </div>
+
+        <div class="row form-inline tablefooter">
+            <div class="form-group col-md-6 actionbuttons" data-bind="foreach: options.bottomActionButtons">
+                <input type="button" class="btn btn-success" data-bind="click: $data.action, visible: $data.visible, attr: {value: $data.title, id: $data.name + 'btn', disabled: $data.disabled }" />
+            </div>
+            <div class="form-group col-md-6 bottom-nav pull-right">
+                <div class="form-group col-md-4">
+                    <label class="control-label" style="font-weight:normal;">Show:</label>
+                    <div class="form-group">
+                        <select id="psPageSize" name="psPageSize" class="form-control" data-bind="value: pageSize, options: pageSizes, optionsText: 'Text', optionsValue: 'Value' "></select>
+                    </div>
+                </div>
+
+                <div class="form-group pull-right table-pagination" data-bind="visible: pages().length > 1">
+                    <ul class="pagination inline-list">
+                        <li>
+                            <a href="javascript:void(0);" aria-label="Previous" data-bind="click: act_previousPageClick, visible: pageIndex() > 0">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="pagination inline-list" data-bind="foreach: pages">
+                        <li data-bind="visible: $parent.act_showPageNumber($data), css: ($parent.pageIndex() == $data ? 'active' : '')">
+                            <a href="javascript:void(0);" data-bind="text: $data + 1, click: function () { $parent.pageIndex($data) }"></a>
+                        </li>
+                    </ul>
+                    <ul class="pagination inline-list">
+                        <li>
+                            <a href="javascript:void(0);" aria-label="Next" data-bind="click: act_nextPageClick, visible: pageIndex() < maxPageIndex()">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,25 @@ namespace KnockoutTable
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-1.9.0.js",
+                        "~/Scripts/jquery.validate.js",
+                        "~/Scripts/jquery.helpers.js",
+                        "~/Scripts/nprogress.js",
+                        "~/Scripts/ajax.js",
+                        "~/Scripts/bootstrap-multiselect.js",
+                        "~/Scripts/tableExport.js",
+                        "~/Scripts/knockout-3.4.1.js",
+                        "~/Scripts/knockout.mapping-latest.js",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/jQueryExtensions.js",
+                        "~/Scripts/Knockout-Extension.js",
+                        "~/Scripts/Misc.js",
+                        "~/Scripts/bootstrap-datetimepicker.js",
+                        "~/Scripts/Knockout_Table.js",
+                        "~/Scripts/confirm_bootstrap.js",
+                        "~/Scripts/toastr.js",
+                        "~/Scripts/messaging.js",
+                        "~/Scripts/moment.js",
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

@@ -4,6 +4,7 @@
 }
 
 /* Set padding to keep content from hitting the edges */
+.navbar-default,
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -16,9 +17,54 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.navbar-inverse {
+    background-color: #d9edf7;       
 }
+
+.navbar-inverse .navbar-collapse, 
+.navbar-inverse .navbar-form {
+    border-color: none !important;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.knockout-table-body {
+    padding: 40px 0;
+}
+
+.knockout-table-body #tablelist > thead > tr {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+    .knockout-table-body #tablelist > thead > tr > th {
+        cursor: pointer;
+        vertical-align: middle;
+    }
+
+        .knockout-table-body #tablelist > thead > tr > th span.glyphicon-chevron-down, .knockout-table-body #tablelist > thead > tr > th span.glyphicon-chevron-up {
+            top: 5px;
+        }
+
+.knockout-table-body #tablelist > tbody > tr:nth-child(odd) {
+    background-color: #ededed;
+}
+
+.knockout-table-body #tablelist > tbody > tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+    .knockout-table-body #tablelist > tbody > tr > td > a.itemaction {
+        margin-right: 5px;
+    }
+
+    .knockout-table-body .knockout-table .tablefooter {
+        padding: 20px 0;
+    }
+
+    .knockout-table-body .knockout-table .tablefooter .pagination {
+        margin: 0;
+    }

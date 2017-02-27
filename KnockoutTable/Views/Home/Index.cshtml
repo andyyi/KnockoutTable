@@ -2,30 +2,72 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@section scripts {
+    @Scripts.Render("~/Scripts/home/index.js")
+}
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+@Html.Partial("_Knockout-Table")
+
+<div id="createNewDialogue" class="modal fade" tabindex="-1" data-bind="with: selectedItem">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title" data-bind="text: (Id() > 0 ? 'Edit' : 'Create New') + ' Project'"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">Name:</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="name" type="text" data-bind="value: Name" minlength="2" maxlength="100" placeholder="Name" required />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-3">Introduction:</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" id="introduction" name="introduction" rows="6" type="text" placeholder="Introduction" data-bind="value: Introduction" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-3">Start Date:</label>
+                        <div class="col-md-9">
+                            <div class="input-group date form_date" data-link-format="mm/dd/yyyy" data-date-format="mm/dd/yyyy">
+                                <input class="form-control" type="text" id="startdate" name="startdate" placeholder="Start Date" data-bind="value: StartDateUtc, dateString: StartDateUtc, datePattern: 'MM/DD/YYYY'" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-3">End Date:</label>
+                        <div class="col-md-9">
+                            <div class="input-group date form_date" data-link-format="mm/dd/yyyy" data-date-format="mm/dd/yyyy">
+                                <input class="form-control" type="text" id="enddate" name="enddate" placeholder="End Date" data-bind="value: EndDateUtc() ? EndDateUtc() : '', dateString: EndDateUtc, datePattern: 'MM/DD/YYYY'" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-3">Url:</label>
+                        <div class="col-md-9">
+                            <input type="url" class="form-control" id="url" name="url" placeholder="Url" data-bind="value: URL" required />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-md-3">Status:</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="status" name="status" data-bind="options: $root.options.staticOptions.Status, optionsText: 'text', optionsValue: 'value', value: Status"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
