@@ -166,6 +166,36 @@ Here is one very simple example.You have to take the following two steps (I crea
     viewAction.initDatepicker();
 ```
 
+Here are some key points when you defind the columns.
+
+1. Any property you would used in the knockout-table, please defind it in the options. If you would NOT show it, please set it visible: false.
+2. Generally, you are asked to defind the type of the column. That is because search and sort need to know the column type.
+3. For the action icon, you are allow to use any other fonts, such as fontawesome, etc. The property "icon" is just for add the related class into the <a> elements.
+4. You are recommend to user Web API to retrieve data from server. We are expecting to get one array of object, such as 
+
+![2017-02-27_1050](https://cloud.githubusercontent.com/assets/5318516/23347074/84353ed4-fcda-11e6-9792-a085ab0d6f70.png)
+
+To set the Web API, please go to the apiURL property as below:
+
+```javascript
+
+    apiURL: {
+        del: "/project/delete",         //POST
+        get: "/project/getprojects",    //Get
+        update: "/project/update",      //PUT
+        add: "/project/create"          //POST
+    }
+    
+```
+
+5. We are asked to make each row unique, so please set the uniqueId column. For example, if your data is unique by ID, then please use "ID" here, else if it is "Name", then please "Name", this property can not be NULL or undefined.
+
+6. For "newObj", it is mainly for crateing new object. If you would like to create new object throught click "Create", then please defind this property. It is mainly for initinalizing the new object in dialogue window.
+
+7. For the <select> element in your page, you are allow to bind the select options with options defined in the table options. We have two kinds of options: "staticOptions" and "dynamicOptions". I show two example regarding how to defind them:
+
+ 
+
 
 
 ## Notice
