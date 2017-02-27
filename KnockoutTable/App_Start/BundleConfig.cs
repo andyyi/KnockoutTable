@@ -9,7 +9,7 @@ namespace KnockoutTable
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-1.9.0.js",
+                        "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery.validate.js",
                         "~/Scripts/jquery.helpers.js",
                         "~/Scripts/nprogress.js",
@@ -19,6 +19,7 @@ namespace KnockoutTable
                         "~/Scripts/knockout-3.4.1.js",
                         "~/Scripts/knockout.mapping-latest.js",
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/respond.js",
                         "~/Scripts/jQueryExtensions.js",
                         "~/Scripts/Knockout-Extension.js",
                         "~/Scripts/Misc.js",
@@ -27,8 +28,7 @@ namespace KnockoutTable
                         "~/Scripts/confirm_bootstrap.js",
                         "~/Scripts/toastr.js",
                         "~/Scripts/messaging.js",
-                        "~/Scripts/moment.js",
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/moment.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -38,12 +38,10 @@ namespace KnockoutTable
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/nprogress.css",
+                      "~/Content/toastr.css",
                       "~/Content/site.css"));
         }
     }
