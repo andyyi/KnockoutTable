@@ -192,9 +192,29 @@ To set the Web API, please go to the apiURL property as below:
 
 6. For "newObj", it is mainly for crateing new object. If you would like to create new object throught click "Create", then please defind this property. It is mainly for initinalizing the new object in dialogue window.
 
-7. For the <select> element in your page, you are allow to bind the select options with options defined in the table options. We have two kinds of options: "staticOptions" and "dynamicOptions". I show two example regarding how to defind them:
+7. For the "select" element in your page, you are allow to bind the select options with options defined in the table options. We have two kinds of options: "staticOptions" and "dynamicOptions". I show two example regarding how to defind them:
 
- 
+
+```javascript
+
+    filterOptions: [
+            {
+                filterField: "Status", title: "Status", type: "select", ignoredValue: -1, currentValue: ko.observable(-1), hidden: ko.observable(false),
+                staticOption: true, optionsFrom: "Status",
+                options: ko.observableArray([{ text: "Status", value: -1 }])
+            }
+        ]
+    
+```
+
+```javascript
+
+    dynamicOptions: {
+            Teams: { apiUrl: "/team/getteams", selectOptions: ko.observableArray([]), textName: "Name", valueName: "Id" },
+            Titles: { apiUrl: "/title/gettitles", selectOptions: ko.observableArray([]), textName: "Name", valueName: "Id" }
+        }
+    
+```
 
 
 
