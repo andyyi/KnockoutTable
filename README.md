@@ -216,6 +216,33 @@ To set the Web API, please go to the apiURL property as below:
     
 ```
 
+8. For the viewModel, we recommend you to create your own functions if you need to more. Such as the other actions you defined, for example, you would like to show the equipments and license for the selected items. You can definded the actions in actions property as below:
+
+```javascript
+    {
+        field: "action", title: "Action", type: "", visible: true, style: 'style="width: 90px; text-align: center;"',
+        actions: [
+            { title: "edit", icon: "fa fa-edit", action: "$root.act_editItem", visibleDataBind: "$data.Active" },
+            { title: "equipments", icon: "fa fa-print", action: "$root.act_showEquipments", visibleDataBind: "$data.Active && $data.HasEquipments()" },
+            { title: "licenses", icon: "fa fa-file", action: "$root.act_showLicenses", visibleDataBind: "$data.Active && $data.HasLicenses()" },
+            { title: "delete", icon: "fa fa-trash", action: "$root.act_deleteItems", visibleDataBind: "$data.Active" }
+        ]
+    }
+```
+
+By the way, you need to implement the actions as below in your viewModel.
+
+```javascript
+    viewModel.act_showEquipments = function () {
+        self.location = "/Settings/OfficeStuff/" + this.Id() + "/equipments";
+    };
+
+    viewModel.act_showLicenses = function () {
+        self.location = "/Settings/OfficeStuff/" + this.Id() + "/licenses";
+    };
+
+```
+
 
 
 ## Notice
