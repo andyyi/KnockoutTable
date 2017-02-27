@@ -20,9 +20,9 @@
         <span>No record at this moment.</span>
     </div>
     <div data-bind="visible: listItems().length > 0">
-        <div class="row form-inline" data-bind="visible: options.filterOptions.length || (options.showTopPaginationBar && pages().length > 1)">
+        <div class="row form-inline table-top-header" data-bind="visible: options.filterOptions.length || (options.showTopPaginationBar && pages().length > 1)">
             <div class="col-md-8 col-sm-8 col-xs-12 top-filter">
-                <div style="float:left; margin-right:10px; padding: 5px 0;" data-bind="visible: options.filterOptions.length">
+                <div style="float:left; margin-right:10px;" data-bind="visible: options.filterOptions.length">
                     <span style="margin-right:10px;">Filter By: </span>
                     <select id="selectedFilters" multiple
                             data-bind="options: options.filterOptions,

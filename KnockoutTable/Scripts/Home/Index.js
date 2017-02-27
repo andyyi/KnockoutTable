@@ -77,34 +77,16 @@
                 { text: "Pending", value: 3 },
                 { text: "Cancelled", value: 4 }
             ]
-        }
+        },
+        topActionButtons: [
+            { name: 'create' }
+        ],
+        bottomActionButtons: [
+            { name: "delete" }
+        ]
     };
 
-    var viewAction = {
-
-        initDatepicker: function () {
-            $('#createNewDialogue').on('shown.bs.modal', function () {
-                $('.form_date').datetimepicker({
-                    format: 'mm/dd/yyyy',
-                    weekStart: 1,
-                    todayBtn: 'linked',
-                    autoclose: true,
-                    todayHighlight: 1,
-                    startView: 2,
-                    minView: 2,
-                    forceParse: 0
-                });
-            });
-        }
-    }
-
     viewModel = new Knockout_Table(options);
-
-    viewModel.setTopActionButtons([
-        {
-            name: 'create'
-        }
-    ]);
 
     viewModel.showStatus = function (status) {
         var html,
@@ -125,22 +107,36 @@
         return html;
     };
 
-    //Define bottom actions buttons, such as "delete", "print", and so on.
-    viewModel.setbottomActionButtons([
-        { name: "delete" }
-    ]);
-
     ko.applyBindings(viewModel, $(".knockout-table").get(0));
     ko.applyBindings(viewModel, $("#createNewDialogue").get(0));
     viewModel.initSelectFilterSelector();
 
     viewModel.loadData([
-        { Id: 1, Name: "MMS 1.4", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
-        { Id: 2, Name: "DNN 8.0", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
-        { Id: 3, Name: "CareLane", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
-        { Id: 4, Name: "JQuery Data Bining 2.0", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
-        { Id: 5, Name: "Perfect Class Dring System", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
+        { Id: 1, Name: "MMS 1.4", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: moment().format("YYYY-MM-DD"), EndDateUtc: "", Active: true },
+        { Id: 2, Name: "DNN 8.0", Introduction: "", OwnerId: 0, URL: "", Status: 1, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
+        { Id: 3, Name: "CareLane", Introduction: "", OwnerId: 0, URL: "", Status: 2, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
+        { Id: 4, Name: "JQuery Data Bining 2.0", Introduction: "", OwnerId: 0, URL: "", Status: 3, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
+        { Id: 5, Name: "Perfect Class Dring System", Introduction: "", OwnerId: 0, URL: "", Status: 4, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
         { Id: 6, Name: "VR 1.0 TS", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true }
     ]);
+
+    var viewAction = {
+
+        initDatepicker: function () {
+            $('#createNewDialogue').on('shown.bs.modal', function () {
+                $('.form_date').datetimepicker({
+                    format: 'mm/dd/yyyy',
+                    weekStart: 1,
+                    todayBtn: 'linked',
+                    autoclose: true,
+                    todayHighlight: 1,
+                    startView: 2,
+                    minView: 2,
+                    forceParse: 0
+                });
+            });
+        }
+    }
+
     viewAction.initDatepicker();
 });

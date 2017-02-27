@@ -631,7 +631,7 @@ $(function () {
                 }
             }
 
-            $filterSlector.multiselect({
+            $("#selectedFilters").multiselect({
                 enableHTML: true,
                 multiselect: true,
                 buttonText: function () {
@@ -697,33 +697,29 @@ $(function () {
             };
         };
 
-        misc.setTopActionButtons = function (actionButtons) {
-            $.each(actionButtons, function (index, button) {
+        misc.setTopActionButtons = function () {
+            $.each(misc.options.topActionButtons, function (index, button) {
                 if (button.name == 'create') {
-                    misc.options.topActionButtons.push({ name: 'create', title: "Create", visible: true, action: misc.act_createItem });
-                } else {
-                    misc.options.topActionButtons.push(button);
-                }
+                    $.extend(true, button, { name: 'create', title: "Create", visible: true, action: misc.act_createItem });
+                } 
             });
         };
 
-        misc.setbottomActionButtons = function (actionButtons) {
-            $.each(actionButtons, function (index, button) {
+        misc.setBottomActionButtons = function () {
+            $.each(misc.options.bottomActionButtons, function (index, button) {
                 if (button.name == 'delete') {
-                    misc.options.bottomActionButtons.push({
+                    $.extend(true, button, {
                         name: 'delete', title: "Delete", visible: true, disabled: false, action: misc.act_deleteItems
                     });
                 } else if (button.name == 'copy') {
-                    misc.options.bottomActionButtons.push({
+                    $.extend(true, button, {
                         name: 'copy', title: "Copy", visible: true, disabled: false, action: misc.act_copyItems
                     });
                 } else if (button.name == 'download') {
-                    misc.options.bottomActionButtons.push({
+                    $.extend(true, button, {
                         name: 'download', title: "Download", visible: true, disabled: false, action: misc.act_downloadItems
                     });
-                } else {
-                    misc.options.bottomActionButtons.push(button);
-                }
+                } 
             });
         };
 
@@ -912,5 +908,11 @@ $(function () {
 
         //I: Initial the knockout data-biding on HTML.
         misc.initialBootstrapTableHtml();
+
+        //Set top and bottom actions
+        misc.setTopActionButtons();
+        misc.setBottomActionButtons();
+
+        //misc.initSelectFilterSelector();
     };
 });
