@@ -232,6 +232,65 @@ To set the Web API, please go to the apiURL property as below:
     }
 ```
 
+Knockout-Table Options:
+
+* uniqueId - The column name which to identify the unique of the row in table (default value: "Id")
+
+* selector - The CSS selector for binding ko view model to DOM  (NOT allow to NULL)
+
+* createNewDialogueId - The CSS selector for you to select the diglogue for edit/create new items. For example:
+
+```javascript
+<div id="createNewDialogue" class="modal fade" tabindex="-1" data-bind="with: selectedItem">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title" data-bind="text: (Id() > 0 ? 'Edit' : 'Create New') + ' Title'"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">Name:</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="name" type="text" data-bind="value: Name" minlength="2" maxlength="100" placeholder="Name" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" >Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+```
+
+* defaultSortColumn - The default sort column when the table render completes. You have to make sure this column is defined in  "column", else it would NOT working
+
+* showSearchField - Show the search field and cancel button, or not. (Default value: true)
+
+* columns - Defined all columns you would like to involved in your view model lists. It has the following options:
+
+  - field - Field name in your object retrieved from server or defined in your JS code.
+  
+  - type - The type of the column, currently we support "string", "int", "bool", "date", and so on.
+  
+  - visible - "true" or "false" (Default value: true)
+  
+  - sortable - "true" or "false" (Default value: true)
+  
+  - searchable - "true" or "false" (Default value: false)
+  
+  - style - CSS style. This would be applied in the specfied column.
+  
+  - actions - You are suggest to use the format like "", else it would error out in the data-bindings.
+  
+  - html - "true" or "false". For some column, we would like to show html content instead of text. (Default value: false)
+
+ 
+
 By the way, you need to implement the actions as below in your viewModel.
 
 ```javascript
