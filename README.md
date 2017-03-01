@@ -303,30 +303,30 @@ Knockout-Table Options:
 * rowStyles - The style of specified row. You are recommended to use the following format.
  
  ```javascript 
- 
     rowStyles: [
         {
             css: "highlighactive", field: "Active", action: "common_compareBoolean(!value)"
         }
-    ]
-        
+    ]   
 ```
 
-* newObj - You are recommended to defined newObj if you would like to edit and create new object. We are user ko.mapping.fromJS method to create new object and format some properties if they are not NULL or undefined in your data list.
 
-* pageSize: Page size of each page (Default value: 5)
+
 
 * apiURL - API urls for CRUD data. 
 
 ```javascript
     apiURL: {
-        add: "",
-        del: "",
-        get: "",
-        update: "",
-        copy: ""
+        del: "/project/delete",
+        get: "/project/getprojects",
+        update: "/project/update",
+        add: "/project/create"
     }
-``` 
+```
+
+* newObj - You are recommended to defined newObj if you would like to edit and create new object. We are user ko.mapping.fromJS method to create new object and format some properties if they are not NULL or undefined in your data list.
+
+* pageSize: Page size of each page (Default value: 5)
 
 * includeDeletedItems - For some special purpose, we would like to still show the deleted items (not hard delete in DB) with some flags (for example active = false). (Default value: true)
 
@@ -363,6 +363,61 @@ Knockout-Table Options:
     ],
 
 ```
+
+* topActionButtons - Define the top actions, for example:
+
+        {
+            name: 'Create New', title: "Create New", visible: true, disabled: false,
+            action: function () {
+                self.location = '/home/createnews';
+            }
+        }
+
+* bottomActionButtons - Define the bottom actions, for example:
+
+        {
+            name: 'changesalary', title: "Change Salary", visible: document.hasAdminPermission, disabled: false,
+            action: function () {
+
+                var obj = {
+                    employeeId: document.employeeId,
+                    reviewScheduleId: "",
+                    current: "",
+                    comment: ""
+                };
+
+                viewModel.changeSalaryViewModel(ko.mapping.fromJS(obj));
+
+                $("#createnewsalarydialogue").modal('show');
+            }
+        }
+
+* staticOptions - Option data is static and can be defined directly.
+
+        staticOptions: {
+            Status: [
+                    { text: "New", value: 0 },
+                    { text: "Self Review", value: 1 },
+                    { text: "Team Review", value: 2 },
+                    { text: "Meeting Review", value: 3 },
+                    { text: "Finished", value: 4 }
+            ],
+            Scores: [
+                    { text: "Not Evaluated", value: 0 },
+                    { text: "Unsatisfied", value: 1 },
+                    { text: "Below Expectation", value: 2 },
+                    { text: "Meet Expectation", value: 3 },
+                    { text: "Above Expectation", value: 4 },
+                    { text: "Outstanding", value: 5 }
+            ]
+        },
+
+* dynamicOptions - Option data need to retrieved from remote server. For example:
+
+        dynamicOptions: {
+            Facilities: { apiUrl: "/facility/getfacilities", selectOptions: ko.observableArray([]), textName: "Name", valueName: "Id" },
+            ReviewSchedules: { apiUrl: "/reviewschedule/getreviewschedules", selectOptions: ko.observableArray([]), textName: "Title", valueName: "Id" }
+        }
 
 
 By the way, you need to implement the actions as below in your viewModel.
