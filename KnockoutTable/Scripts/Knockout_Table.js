@@ -912,7 +912,5 @@ $(function () {
         //Set top and bottom actions
         misc.setTopActionButtons();
         misc.setBottomActionButtons();
-
-        //misc.initSelectFilterSelector();
     };
 });
