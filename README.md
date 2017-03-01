@@ -453,10 +453,8 @@ This JS plug-in is mainly for the people who is familiar with Knockout.JS. Since
 
 MIT License
 
-## Copyright (c) 2017 Andy
+## Addtional notice
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+So far, I have use this JS plug-in to finished one big project. And it can meet all of my requirement for table and related fuctionalities, such as popover, datetime picker, formatting, and so on. For some issues, you need to take some tricky ways. I would not talk more here. If you face any issues, no matter it is my JS issues or you don't combine my code into you own code, please submit your issues to me. I would take a look and answer you. But please expect very immediate reply since I'm not focused on this project everyday.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Also, I'm not senior at JS, so if you have some pull request, please go ahead and I would take a look and reply to you very quickly. Thank you very much.
