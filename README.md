@@ -300,9 +300,10 @@ Knockout-Table Options:
   
   - html - "true" or "false". For some column, we would like to show html content instead of text. (Default value: false)
 
- * rowStyles - The style of specified row. You are recommended to use the following format.
+* rowStyles - The style of specified row. You are recommended to use the following format.
  
  ```javascript 
+ 
     rowStyles: [
         {
             css: "highlighactive", field: "Active", action: "common_compareBoolean(!value)"
