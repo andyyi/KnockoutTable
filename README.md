@@ -16,6 +16,8 @@ Here are some screenshots for you to have general ideas of what this JS-Plug-in 
 
 ![2017-02-27_0856](https://cloud.githubusercontent.com/assets/5318516/23345530/b1b5aa7a-fcca-11e6-90c0-3b1d87acaf32.png)
 
+![2017-03-01_1151](https://cloud.githubusercontent.com/assets/5318516/23445312/805850a2-fe75-11e6-88c0-6d809fb4801d.png)
+
 ## How to use it?
 
 Here is one very simple example.You have to take the following two steps (I create one asp.net MVC project as one demo)
@@ -144,34 +146,14 @@ Here is one very simple example.You have to take the following two steps (I crea
         { Id: 5, Name: "Perfect Class Dring System", Introduction: "", OwnerId: 0, URL: "", Status: 4, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
         { Id: 6, Name: "VR 1.0 TS", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true }
     ]);
-
-    var viewAction = {
-
-        initDatepicker: function () {
-            $('#createNewDialogue').on('shown.bs.modal', function () {
-                $('.form_date').datetimepicker({
-                    format: 'mm/dd/yyyy',
-                    weekStart: 1,
-                    todayBtn: 'linked',
-                    autoclose: true,
-                    todayHighlight: 1,
-                    startView: 2,
-                    minView: 2,
-                    forceParse: 0
-                });
-            });
-        }
-    }
-
-    viewAction.initDatepicker();
 ```
 
 Here are some key points when you defind the columns.
 
-1. Any property you would used in the knockout-table, please defind it in the options. If you would NOT show it, please set it visible: false.
-2. Generally, you are asked to defind the type of the column. That is because search and sort need to know the column type.
-3. For the action icon, you are allow to use any other fonts, such as fontawesome, etc. The property "icon" is just for add the related class into the <a> elements.
-4. You are recommend to user Web API to retrieve data from server. We are expecting to get one array of object, such as 
+* Any property you would used in the knockout-table, please defind it in the options. If you would NOT show it, please set it visible: false.
+* Generally, you are asked to defind the type of the column. That is because search and sort need to know the column type.
+* For the action icon, you are allow to use any other fonts, such as fontawesome, etc. The property "icon" is just for add the related class into the "a" elements.
+* You are recommend to user Web API to retrieve data from server. We are expecting to get one array of object, such as 
 
 ![2017-02-27_1050](https://cloud.githubusercontent.com/assets/5318516/23347074/84353ed4-fcda-11e6-9792-a085ab0d6f70.png)
 
@@ -188,16 +170,271 @@ To set the Web API, please go to the apiURL property as below:
     
 ```
 
-5. We are asked to make each row unique, so please set the uniqueId column. For example, if your data is unique by ID, then please use "ID" here, else if it is "Name", then please "Name", this property can not be NULL or undefined.
+* We are asked to make each row unique, so please set the uniqueId column. For example, if your data is unique by ID, then please use "ID" here, else if it is "Name", then please "Name", this property can not be NULL or undefined.
 
-6. For "newObj", it is mainly for crateing new object. If you would like to create new object throught click "Create", then please defind this property. It is mainly for initinalizing the new object in dialogue window.
+* For "newObj", it is mainly for crateing new object. If you would like to create new object throught click "Create", then please defind this property. It is mainly for initinalizing the new object in dialogue window.
 
-7. For the <select> element in your page, you are allow to bind the select options with options defined in the table options. We have two kinds of options: "staticOptions" and "dynamicOptions". I show two example regarding how to defind them:
+* For the "select" element in your page, you are allow to bind the select options with options defined in the table options. We have two kinds of options: "staticOptions" and "dynamicOptions". I show two example regarding how to defind them:
 
+
+```javascript
+
+    filterOptions: [
+            {
+                filterField: "Status", title: "Status", type: "select", ignoredValue: -1, currentValue: ko.observable(-1), hidden: ko.observable(false),
+                staticOption: true, optionsFrom: "Status",
+                options: ko.observableArray([{ text: "Status", value: -1 }])
+            }
+        ]
+    
+```
+
+```javascript
+
+    dynamicOptions: {
+            Teams: { apiUrl: "/team/getteams", selectOptions: ko.observableArray([]), textName: "Name", valueName: "Id" },
+            Titles: { apiUrl: "/title/gettitles", selectOptions: ko.observableArray([]), textName: "Name", valueName: "Id" }
+        }
+    
+```
+
+* For the viewModel, we recommend you to create your own functions if you need to more. Such as the other actions you defined, for example, you would like to show the equipments and license for the selected items. You can definded the actions in actions property as below:
+
+```javascript
+    {
+        field: "action", title: "Action", type: "", visible: true, style: 'style="width: 90px; text-align: center;"',
+        actions: [
+            { title: "edit", icon: "fa fa-edit", action: "$root.act_editItem", visibleDataBind: "$data.Active" },
+            { title: "equipments", icon: "fa fa-print", action: "$root.act_showEquipments", visibleDataBind: "$data.Active && $data.HasEquipments()" },
+            { title: "licenses", icon: "fa fa-file", action: "$root.act_showLicenses", visibleDataBind: "$data.Active && $data.HasLicenses()" },
+            { title: "delete", icon: "fa fa-trash", action: "$root.act_deleteItems", visibleDataBind: "$data.Active" }
+        ]
+    }
+```
+
+By the way, you need to implement the actions as below in your viewModel.
+
+```javascript
+    viewModel.act_showEquipments = function () {
+        self.location = "/Settings/OfficeStuff/" + this.Id() + "/equipments";
+    };
+
+    viewModel.act_showLicenses = function () {
+        self.location = "/Settings/OfficeStuff/" + this.Id() + "/licenses";
+    };
+
+```
+
+
+Knockout-Table Options:
+
+* uniqueId - The column name which to identify the unique of the row in table (default value: "Id")
+
+* selector - The CSS selector for binding ko view model to DOM  (NOT allow to NULL)
+
+* createNewDialogueId - The CSS selector for you to select the diglogue for edit/create new items. For example:
+
+```javascript
+<div id="createNewDialogue" class="modal fade" tabindex="-1" data-bind="with: selectedItem">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title" data-bind="text: (Id() > 0 ? 'Edit' : 'Create New') + ' Title'"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 control-label">Name:</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="name" type="text" data-bind="value: Name" minlength="2" maxlength="100" placeholder="Name" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" >Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+```
+
+* defaultSortColumn - The default sort column when the table render completes. You have to make sure this column is defined in  "column", else it would NOT working
+
+* showSearchField - Show the search field and cancel button, or not. (Default value: true)
+
+* columns - Defined all columns you would like to involved in your view model lists. It has the following options:
+
+  - field - Field name in your object retrieved from server or defined in your JS code.
+  
+  - type - The type of the column, currently we support "string", "int", "bool", "date", and so on.
+  
+  - visible - "true" or "false" (Default value: true)
+  
+  - sortable - "true" or "false" (Default value: true)
+  
+  - searchable - "true" or "false" (Default value: false)
+  
+  - style - CSS style. This would be applied in the specfied column.
+  
+  - actions - This is only for "action" column. You are suggest to use the format as below, else it would error out in the data-bindings.
+  
+```javascript  
+    {
+        field: "action", title: "Action", type: "", visible: true, style: 'style="width: 60px; text-align: center; vertical-align: middle;"',
+        actions: [
+            { title: "edit", icon: "glyphicon glyphicon-edit", action: "$root.act_editItem" },
+            { title: "delete", icon: "glyphicon glyphicon-trash", action: "$root.act_deleteItems" }
+        ]
+    }
+            
+```
+  
+  - html - "true" or "false". For some column, we would like to show html content instead of text. (Default value: false)
+
+* rowStyles - The style of specified row. You are recommended to use the following format.
  
+ ```javascript 
+    rowStyles: [
+        {
+            css: "highlighactive", field: "Active", action: "common_compareBoolean(!value)"
+        }
+    ]   
+```
 
+
+
+
+* apiURL - API urls for CRUD data. 
+
+```javascript
+    apiURL: {
+        del: "/project/delete",
+        get: "/project/getprojects",
+        update: "/project/update",
+        add: "/project/create"
+    }
+```
+
+* newObj - You are recommended to defined newObj if you would like to edit and create new object. We are user ko.mapping.fromJS method to create new object and format some properties if they are not NULL or undefined in your data list.
+
+* pageSize: Page size of each page (Default value: 5)
+
+* includeDeletedItems - For some special purpose, we would like to still show the deleted items (not hard delete in DB) with some flags (for example active = false). (Default value: true)
+
+* showDetailInPopover - If you would like to show the detail info in popover window when you hover the mouse on the row, then set this to true. (Default value: false)
+
+![2017-03-01_1227](https://cloud.githubusercontent.com/assets/5318516/23445982/85614478-fe7a-11e6-9074-b32ac2b35f3d.png)
+
+* showTopPaginationBar - Show the top pagination or not (Default value: true)
+
+* filterOptions - All items in this property would be list in the filter multi-select control and also showing at the top bar. For example:
+
+![2017-03-01_1230](https://cloud.githubusercontent.com/assets/5318516/23446036/e76b3bba-fe7a-11e6-86b9-9d91d324bd44.png)
+
+```javascript
+    filterOptions: [
+        {
+            filterField: "ReviewSchedule.Id", title: "Review Schedule", type: "select", ignoredValue: -1, defaultValue: (reviewScheduleId ? reviewScheduleId : - 1), currentValue: ko.observable(reviewScheduleId ? reviewScheduleId : - 1), hidden: ko.observable(false),
+            staticOption: false, optionsFrom: "ReviewSchedules",
+            options: ko.observableArray([{ text: "Review Schedule", value: -1 }])
+        },
+        {
+            filterField: "Status", title: "Status", type: "select", ignoredValue: -1, currentValue: ko.observable(-1), hidden: ko.observable(false),
+            staticOption: true, optionsFrom: "Status",
+            options: ko.observableArray([{ text: "Status", value: -1 }])
+        },
+        {
+            filterField: "Score", title: "Score", type: "select", ignoredValue: -1, currentValue: ko.observable(-1), hidden: ko.observable(true),
+            staticOption: true, optionsFrom: "Scores",
+            options: ko.observableArray([{ text: "Rating Score", value: -1 }])
+        },
+        {
+            filterField: "Active", title: "Active?", type: "checkbox", ignoredValue: false, currentValue: ko.observable(true), hidden: ko.observable(true),
+        }
+    ],
+
+```
+
+* topActionButtons - Define the top actions, for example:
+
+        {
+            name: 'Create New', title: "Create New", visible: true, disabled: false,
+            action: function () {
+                self.location = '/home/createnews';
+            }
+        }
+
+* bottomActionButtons - Define the bottom actions, for example:
+
+        {
+            name: 'changesalary', title: "Change Salary", visible: document.hasAdminPermission, disabled: false,
+            action: function () {
+
+                var obj = {
+                    employeeId: document.employeeId,
+                    reviewScheduleId: "",
+                    current: "",
+                    comment: ""
+                };
+
+                viewModel.changeSalaryViewModel(ko.mapping.fromJS(obj));
+
+                $("#createnewsalarydialogue").modal('show');
+            }
+        }
+
+* staticOptions - Option data is static and can be defined directly.
+
+        staticOptions: {
+            Status: [
+                    { text: "New", value: 0 },
+                    { text: "Self Review", value: 1 },
+                    { text: "Team Review", value: 2 },
+                    { text: "Meeting Review", value: 3 },
+                    { text: "Finished", value: 4 }
+            ],
+            Scores: [
+                    { text: "Not Evaluated", value: 0 },
+                    { text: "Unsatisfied", value: 1 },
+                    { text: "Below Expectation", value: 2 },
+                    { text: "Meet Expectation", value: 3 },
+                    { text: "Above Expectation", value: 4 },
+                    { text: "Outstanding", value: 5 }
+            ]
+        },
+
+* dynamicOptions - Option data need to retrieved from remote server. For example:
+
+        dynamicOptions: {
+            Facilities: { apiUrl: "/facility/getfacilities", selectOptions: ko.observableArray([]), textName: "Name", valueName: "Id" },
+            ReviewSchedules: { apiUrl: "/reviewschedule/getreviewschedules", selectOptions: ko.observableArray([]), textName: "Title", valueName: "Id" }
+        }
+
+
+## Properties and methods you probably need
+
+* listItems - All data items in the whole table.
+
+* selectedItem - When you edit or create one item, the current edit showing in the dialogue is the selectedItem
+
+* selectedItems - All selected items at this moment
+
+* initSelectFilterSelector - This method should be called after your bind the view model to DOM. Its purpose is to initialize the multiple select control at the top left of table.
+
+* loadData - You need to call this method to load the data either via web api method or your can pass one data (array).
 
 
 ## Notice
 
 This JS plug-in is mainly for the people who is familiar with Knockout.JS. Since the basic design is to build the HTML and then make the data binding. So some code is a little difficult to understanding when you configure the options. I list some of the examples as below. At this moment, I have no much time to make optimization, but if someone else is really intested in optimizing the code, please make one pull request.
+
+MIT License
+
+## Addtional notice
+
+So far, I have use this JS plug-in to finished one big project. And it can meet all of my requirement for table and related fuctionalities, such as popover, datetime picker, formatting, and so on. For some issues, you need to take some tricky ways. I would not talk more here. If you face any issues, no matter it is my JS issues or you don't combine my code into you own code, please submit your issues to me. I would take a look and answer you. But please expect very immediate reply since I'm not focused on this project everyday.
+
+Also, I'm not senior at JS, so if you have some pull request, please go ahead and I would take a look and reply to you very quickly. Thank you very much.
