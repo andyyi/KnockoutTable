@@ -232,6 +232,20 @@ To set the Web API, please go to the apiURL property as below:
     }
 ```
 
+By the way, you need to implement the actions as below in your viewModel.
+
+```javascript
+    viewModel.act_showEquipments = function () {
+        self.location = "/Settings/OfficeStuff/" + this.Id() + "/equipments";
+    };
+
+    viewModel.act_showLicenses = function () {
+        self.location = "/Settings/OfficeStuff/" + this.Id() + "/licenses";
+    };
+
+```
+
+
 Knockout-Table Options:
 
 * uniqueId - The column name which to identify the unique of the row in table (default value: "Id")
@@ -420,18 +434,7 @@ Knockout-Table Options:
         }
 
 
-By the way, you need to implement the actions as below in your viewModel.
 
-```javascript
-    viewModel.act_showEquipments = function () {
-        self.location = "/Settings/OfficeStuff/" + this.Id() + "/equipments";
-    };
-
-    viewModel.act_showLicenses = function () {
-        self.location = "/Settings/OfficeStuff/" + this.Id() + "/licenses";
-    };
-
-```
 
 
 
