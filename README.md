@@ -438,3 +438,7 @@ MIT License
 So far, I have use this JS plug-in to finished one big project. And it can meet all of my requirement for table and related fuctionalities, such as popover, datetime picker, formatting, and so on. For some issues, you need to take some tricky ways. I would not talk more here. If you face any issues, no matter it is my JS issues or you don't combine my code into you own code, please submit your issues to me. I would take a look and answer you. But please expect very immediate reply since I'm not focused on this project everyday.
 
 Also, I'm not senior at JS, so if you have some pull request, please go ahead and I would take a look and reply to you very quickly. Thank you very much.
+
+Please contact me if you need me to answer for you. Here is my WeChat accout.
+
+![127897270775187806](https://cloud.githubusercontent.com/assets/5318516/23446843/9f9e5dd8-fe81-11e6-941f-3dbf6cafdf14.jpg)
