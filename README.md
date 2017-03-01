@@ -146,26 +146,6 @@ Here is one very simple example.You have to take the following two steps (I crea
         { Id: 5, Name: "Perfect Class Dring System", Introduction: "", OwnerId: 0, URL: "", Status: 4, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true },
         { Id: 6, Name: "VR 1.0 TS", Introduction: "", OwnerId: 0, URL: "", Status: 0, Owner: { Id: 0, EnglishName: "" }, StartDateUtc: "", EndDateUtc: "", Active: true }
     ]);
-
-    var viewAction = {
-
-        initDatepicker: function () {
-            $('#createNewDialogue').on('shown.bs.modal', function () {
-                $('.form_date').datetimepicker({
-                    format: 'mm/dd/yyyy',
-                    weekStart: 1,
-                    todayBtn: 'linked',
-                    autoclose: true,
-                    todayHighlight: 1,
-                    startView: 2,
-                    minView: 2,
-                    forceParse: 0
-                });
-            });
-        }
-    }
-
-    viewAction.initDatepicker();
 ```
 
 Here are some key points when you defind the columns.
