@@ -16,6 +16,8 @@ Here are some screenshots for you to have general ideas of what this JS-Plug-in 
 
 ![2017-02-27_0856](https://cloud.githubusercontent.com/assets/5318516/23345530/b1b5aa7a-fcca-11e6-90c0-3b1d87acaf32.png)
 
+![2017-03-01_1151](https://cloud.githubusercontent.com/assets/5318516/23445312/805850a2-fe75-11e6-88c0-6d809fb4801d.png)
+
 ## How to use it?
 
 Here is one very simple example.You have to take the following two steps (I create one asp.net MVC project as one demo)
