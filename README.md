@@ -434,8 +434,17 @@ Knockout-Table Options:
         }
 
 
+## Properties and methods you probably need
 
+* listItems - All data items in the whole table.
 
+* selectedItem - When you edit or create one item, the current edit showing in the dialogue is the selectedItem
+
+* selectedItems - All selected items at this moment
+
+* initSelectFilterSelector - This method should be called after your bind the view model to DOM. Its purpose is to initialize the multiple select control at the top left of table.
+
+* loadData - You need to call this method to load the data either via web api method or your can pass one data (array).
 
 
 ## Notice
