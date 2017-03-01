@@ -285,11 +285,84 @@ Knockout-Table Options:
   
   - style - CSS style. This would be applied in the specfied column.
   
-  - actions - You are suggest to use the format like "", else it would error out in the data-bindings.
+  - actions - This is only for "action" column. You are suggest to use the format as below, else it would error out in the data-bindings.
+  
+```javascript  
+    {
+        field: "action", title: "Action", type: "", visible: true, style: 'style="width: 60px; text-align: center; vertical-align: middle;"',
+        actions: [
+            { title: "edit", icon: "glyphicon glyphicon-edit", action: "$root.act_editItem" },
+            { title: "delete", icon: "glyphicon glyphicon-trash", action: "$root.act_deleteItems" }
+        ]
+    }
+            
+```
   
   - html - "true" or "false". For some column, we would like to show html content instead of text. (Default value: false)
 
+ * rowStyles - The style of specified row. You are recommended to use the following format.
  
+ ```javascript 
+    rowStyles: [
+        {
+            css: "highlighactive", field: "Active", action: "common_compareBoolean(!value)"
+        }
+    ]
+        
+```
+
+* newObj - You are recommended to defined newObj if you would like to edit and create new object. We are user ko.mapping.fromJS method to create new object and format some properties if they are not NULL or undefined in your data list.
+
+* pageSize: Page size of each page (Default value: 5)
+
+* apiURL - API urls for CRUD data. 
+
+```javascript
+    apiURL: {
+        add: "",
+        del: "",
+        get: "",
+        update: "",
+        copy: ""
+    }
+``` 
+
+* includeDeletedItems - For some special purpose, we would like to still show the deleted items (not hard delete in DB) with some flags (for example active = false). (Default value: true)
+
+* showDetailInPopover - If you would like to show the detail info in popover window when you hover the mouse on the row, then set this to true. (Default value: false)
+
+![2017-03-01_1227](https://cloud.githubusercontent.com/assets/5318516/23445982/85614478-fe7a-11e6-9074-b32ac2b35f3d.png)
+
+* showTopPaginationBar - Show the top pagination or not (Default value: true)
+
+* filterOptions - All items in this property would be list in the filter multi-select control and also showing at the top bar. For example:
+
+![2017-03-01_1230](https://cloud.githubusercontent.com/assets/5318516/23446036/e76b3bba-fe7a-11e6-86b9-9d91d324bd44.png)
+
+```javascript
+    filterOptions: [
+        {
+            filterField: "ReviewSchedule.Id", title: "Review Schedule", type: "select", ignoredValue: -1, defaultValue: (reviewScheduleId ? reviewScheduleId : - 1), currentValue: ko.observable(reviewScheduleId ? reviewScheduleId : - 1), hidden: ko.observable(false),
+            staticOption: false, optionsFrom: "ReviewSchedules",
+            options: ko.observableArray([{ text: "Review Schedule", value: -1 }])
+        },
+        {
+            filterField: "Status", title: "Status", type: "select", ignoredValue: -1, currentValue: ko.observable(-1), hidden: ko.observable(false),
+            staticOption: true, optionsFrom: "Status",
+            options: ko.observableArray([{ text: "Status", value: -1 }])
+        },
+        {
+            filterField: "Score", title: "Score", type: "select", ignoredValue: -1, currentValue: ko.observable(-1), hidden: ko.observable(true),
+            staticOption: true, optionsFrom: "Scores",
+            options: ko.observableArray([{ text: "Rating Score", value: -1 }])
+        },
+        {
+            filterField: "Active", title: "Active?", type: "checkbox", ignoredValue: false, currentValue: ko.observable(true), hidden: ko.observable(true),
+        }
+    ],
+
+```
+
 
 By the way, you need to implement the actions as below in your viewModel.
 
